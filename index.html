@@ -147,8 +147,9 @@ footer{margin-top:34px;padding-top:14px;border-top:1px solid var(--rule);font-si
 }
 
 /* Gehört-Regal: Cover-Ansicht und Leiste unten */
-body{padding-bottom:calc(84px + env(safe-area-inset-bottom, 0px))}
-.tabbar{position:fixed;left:0;right:0;bottom:0;z-index:50;transform:translateZ(0);display:flex;justify-content:center;gap:6px;
+body{display:flex;flex-direction:column;min-height:100vh;min-height:100dvh;padding-bottom:0!important}
+body > .wrap, body > section{width:100%;padding-bottom:28px}
+.tabbar{position:sticky;bottom:0;margin-top:auto;margin-left:-16px;margin-right:-16px;z-index:50;display:flex;justify-content:center;gap:6px;
   padding:8px max(16px, env(safe-area-inset-left, 0px)) calc(8px + env(safe-area-inset-bottom, 0px));
   background:color-mix(in srgb, var(--paper) 92%, transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-top:1px solid var(--rule)}
 .tab{font:inherit;font-size:12px;text-decoration:none;display:flex;flex-direction:column;align-items:center;gap:3px;min-width:110px;padding:6px 14px;border:0;border-radius:12px;background:transparent;color:var(--muted);cursor:pointer;position:relative}
@@ -428,7 +429,7 @@ dialog.sheet .book{max-height:calc(100dvh - 48px);overflow:auto;opacity:1}
       <div>Listen: New York Times Book Review, „The 100 Best Books of the 21st Century“ (Juli 2024) und „The 50 Best Thrillers of the 21st Century“ (August 2026); The Guardian, „The 100 best books of the 21st century“ (September 2019).</div>
       <div>Preisträger: Deutscher Buchpreis (ab 2005), Österreichischer Buchpreis (ab 2016), International Booker Prize (ab 2016, in der heutigen Form), Pulitzer-Preis für Fiction (ab 2000) und Deutscher Krimipreis (ab 2000, jeweils Platz 1 national und international). Jeweils nur die Sieger. Bücher, die mehrfach vorkommen, erscheinen einmal mit allen Auszeichnungen.</div>
       <div>Hörbuch-Angaben: geprüft auf audible.de, die ursprünglichen Listen am 22. Oktober 2026, die Ergänzungen am 24. Oktober 2026. Das Angebot ändert sich laufend; „suchen“ heißt, dass sich kein eindeutiger Treffer bestätigen ließ.</div>
-      <div>Cover: Open Library (openlibrary.org), wo vorhanden; meist die englische Ausgabe. Merkliste und „Gehört“ werden nur in diesem Browser gespeichert.</div>
+      <div>Cover: Open Library (openlibrary.org) und Google Books, wo vorhanden. Merkliste und „Gehört“ werden nur in diesem Browser gespeichert.</div>
     </footer>
     </details>
   </section>
@@ -565,7 +566,7 @@ function card(b){
   const orig = hasDe ? ` · <i>${esc(b.title)}</i>` : '';
   const isFav = fav.has(b.id), isHeard = heard.has(b.id), isOpen = openIds.has(b.id);
   const cid = covers[b.id];
-  const img = cid ? `<img src="https://covers.openlibrary.org/b/id/${cid}-M.jpg" alt="" loading="lazy" referrerpolicy="no-referrer" onload="this.classList.add('on');this.parentNode.classList.add('has-img')" onerror="this.remove()">` : '';
+  const img = cid ? `<img src="${esc(cid)}" alt="" loading="lazy" referrerpolicy="no-referrer" onload="this.classList.add('on');this.parentNode.classList.add('has-img')" onerror="this.remove()">` : '';
   return `<article class="book${isHeard?' heard':''}${isOpen?' open':''}" data-id="${b.id}">
     <div class="head">
       <div class="cover${kind(b)}" aria-hidden="true"><span class="ini">${esc(head.replace(/^(Der|Die|Das|The|A|An)\s+/,'').charAt(0))}</span><span class="pt"><b>${esc(head)}</b><i>${esc(b.author)}</i></span>${img}</div>
@@ -648,7 +649,7 @@ function loadState(){ try{ const s = JSON.parse(localStorage.getItem('hr_state')
 function headOf(b){ return b.title_de && b.title_de.toLowerCase() !== b.title.toLowerCase() ? b.title_de : b.title; }
 function shelfCover(b){
   const cid = covers[b.id];
-  const img = cid ? `<img src="https://covers.openlibrary.org/b/id/${cid}-L.jpg" alt="" loading="lazy" referrerpolicy="no-referrer" onload="this.classList.add('on')" onerror="this.remove()">` : '';
+  const img = cid ? `<img src="${esc(cid)}" alt="" loading="lazy" referrerpolicy="no-referrer" onload="this.classList.add('on')" onerror="this.remove()">` : '';
   return `<div class="sc${kind(b)}"><div class="ph"><b>${esc(headOf(b))}</b><i>${esc(b.author)}</i></div>${img}</div>`;
 }
 function perRow(){
@@ -755,10 +756,10 @@ function toggleMark(act, id){
 
 /* Cover: werden im Browser von Open Library geladen (openlibrary.org), Ergebnis wird lokal gemerkt. */
 let covers = {};
-try { covers = JSON.parse(localStorage.getItem('hr_cov_v1') || '{}'); } catch(e) { covers = {}; }
+try { covers = JSON.parse(localStorage.getItem('hr_cov_v2') || '{}'); } catch(e) { covers = {}; }
 const byId = Object.fromEntries(BOOKS.map(b => [b.id, b]));
 const queue = []; let active = 0; const pending = new Set();
-function saveCovers(){ try { localStorage.setItem('hr_cov_v1', JSON.stringify(covers)); } catch(e) {} }
+function saveCovers(){ try { localStorage.setItem('hr_cov_v2', JSON.stringify(covers)); } catch(e) {} }
 function showCover(id){
   const cid = covers[id]; if(!cid) return;
   document.querySelectorAll(`.book[data-id="${id}"] .cover`).forEach(box => {
@@ -767,7 +768,7 @@ function showCover(id){
     im.alt = ''; im.referrerPolicy = 'no-referrer';
     im.onload = () => { im.classList.add('on'); box.classList.add('has-img'); };
     im.onerror = () => im.remove();
-    im.src = `https://covers.openlibrary.org/b/id/${cid}-M.jpg`;
+    im.src = cid;
     box.appendChild(im);
   });
   document.querySelectorAll(`.sb[data-id="${id}"] .sc`).forEach(box => {
@@ -776,21 +777,40 @@ function showCover(id){
     im.alt = ''; im.referrerPolicy = 'no-referrer';
     im.onload = () => im.classList.add('on');
     im.onerror = () => im.remove();
-    im.src = `https://covers.openlibrary.org/b/id/${cid}-L.jpg`;
+    im.src = cid;
     box.appendChild(im);
   });
 }
+async function getJSON(url){ const r = await fetch(url); if(!r.ok) throw new Error(r.status); return r.json(); }
+async function fromOpenLibrary(title, author){
+  const j = await getJSON('https://openlibrary.org/search.json?limit=5&fields=cover_i,title&title=' + encodeURIComponent(title) + '&author=' + encodeURIComponent(author));
+  const d = (j.docs || []).find(x => x.cover_i);
+  return d ? `https://covers.openlibrary.org/b/id/${d.cover_i}-L.jpg` : '';
+}
+async function fromGoogle(title, author){
+  const last = author.split(' ').slice(-1)[0];
+  const j = await getJSON('https://www.googleapis.com/books/v1/volumes?maxResults=5&printType=books&q=' + encodeURIComponent(`intitle:"${title}" inauthor:${last}`));
+  const it = (j.items || []).find(x => x.volumeInfo?.imageLinks?.thumbnail);
+  if(!it) return '';
+  return it.volumeInfo.imageLinks.thumbnail.replace('http://','https://').replace('&edge=curl','') + '&fife=w480';
+}
 async function lookup(id){
   const b = byId[id];
-  const url = 'https://openlibrary.org/search.json?limit=5&fields=cover_i,title&title=' + encodeURIComponent(b.title) + '&author=' + encodeURIComponent(b.author);
-  try {
-    const r = await fetch(url);
-    if(!r.ok) return;
-    const j = await r.json();
-    const d = (j.docs || []).find(x => x.cover_i);
-    covers[id] = d ? d.cover_i : 0;
-    saveCovers(); showCover(id);
-  } catch(e) { /* offline oder gesperrt: Platzhalter bleibt */ }
+  const de = b.title_de && b.title_de !== b.title ? b.title_de : null;
+  const tries = [
+    () => fromOpenLibrary(b.title, b.author),
+    () => fromGoogle(de || b.title, b.author),
+    () => de ? fromGoogle(b.title, b.author) : '',
+    () => de ? fromOpenLibrary(de, b.author) : ''
+  ];
+  let url = '', failed = false;
+  for(const f of tries){
+    try { url = await f(); } catch(e) { failed = true; }
+    if(url) break;
+  }
+  if(!url && failed) return;  /* offline oder gesperrt: später nochmal versuchen */
+  covers[id] = url;
+  saveCovers(); showCover(id);
 }
 function pump(){
   while(active < 3 && queue.length){
