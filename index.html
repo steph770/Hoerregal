@@ -88,8 +88,8 @@ input[type="search"]{flex:1 1 200px}
 .hd{display:flex;flex-direction:column;gap:8px;min-width:0}
 .cover{position:relative;width:64px;max-width:100%;aspect-ratio:2/3;border-radius:2px 4px 4px 2px;overflow:hidden;background:var(--lit-soft);display:grid;place-items:center;border-left:4px solid var(--lit)}
 .cover.thr{background:var(--thr-soft);border-left-color:var(--thr)}
-.cover span{font-family:var(--f-display);font-size:26px;line-height:1;color:var(--lit)}
-.cover.thr span{color:var(--thr)}
+.cover .ini{font-family:var(--f-display);font-size:26px;line-height:1;color:var(--lit)}
+.cover.thr .ini{color:var(--thr)}
 .cover img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .3s;background:var(--card)}
 .cover img.on{opacity:1}
 .cover.has-img{border-left-color:transparent}
@@ -215,6 +215,61 @@ body{padding-bottom:calc(84px + env(safe-area-inset-bottom, 0px))}
 .sb.tilt .sc{transform:rotate(-3deg);transform-origin:bottom left}
 .sb.tilt:hover .sc{transform:rotate(-3deg) translateY(-6px)}
 .srow .gap{flex:1 1 0;max-width:var(--bw)}
+
+/* Home: Filterseite ohne Scrollen */
+.home-top{display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding:22px 0 6px}
+.home-top h1{font-size:34px}
+.fgroup{display:grid;gap:7px;padding:9px 0;border-top:1px solid var(--rule)}
+.fgroup:first-of-type{border-top:0}
+.flabel{font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.fgroup .seg{justify-self:start;max-width:100%}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.row2.toggles{display:flex;flex-wrap:wrap;gap:6px 18px}
+.fgroup input[type="search"]{width:100%}
+.gobtn{display:flex;align-items:center;justify-content:center;gap:8px;margin:12px 0 4px;padding:13px 18px;border-radius:999px;background:var(--ink);color:var(--paper);text-decoration:none;font-size:16px}
+.gobtn svg{width:16px;height:16px}
+.gobtn:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.about{margin-top:18px;border-top:1px solid var(--rule);padding-top:10px;font-size:14px}
+.about summary{cursor:pointer;color:var(--muted);font-family:var(--f-mono);font-size:12px;letter-spacing:.04em}
+.about .stock{margin-top:12px}
+.about footer{border-top:0;margin-top:10px;padding-top:0}
+.tab .badge.alt{background:var(--muted)}
+.tab .badge:empty{display:none}
+#viewList{padding-top:16px}
+.empty a{color:inherit}
+
+/* Kompakte Ansicht mit großem Cover */
+.head{grid-template-columns:auto minmax(0,1fr)}
+.cover{width:64px;transition:width .38s cubic-bezier(.2,.7,.2,1)}
+.cover .ini{transition:font-size .38s}
+.facts{display:none;margin:0;font-family:var(--f-mono);font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.facts b{font-weight:500;color:var(--ok)}
+.more{display:grid;grid-template-rows:1fr;opacity:1;transition:grid-template-rows .38s cubic-bezier(.2,.7,.2,1), opacity .3s .05s}
+.more-in{min-height:0;overflow:hidden;display:flex;flex-direction:column;gap:10px}
+.more-tg{display:none}
+.grid.compact .book{position:relative;padding-bottom:14px}
+.grid.compact .cover{width:118px}
+.cover .pt{display:none}
+.grid.compact .book:not(.open) .cover .ini{display:none}
+.grid.compact .book:not(.open) .cover .pt{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:space-between;padding:12px 8px 10px 10px;text-align:left}
+.cover .pt b{font-family:var(--f-display);font-weight:400;font-size:16px;line-height:1.15;color:inherit;overflow-wrap:break-word;hyphens:auto;-webkit-hyphens:auto;display:-webkit-box;-webkit-line-clamp:6;-webkit-box-orient:vertical;overflow:hidden}
+.cover .pt i{font-style:normal;font-family:var(--f-mono);font-size:10px;color:var(--muted)}
+.cover{color:var(--lit)} .cover.thr{color:var(--thr)} .cover.gdn{color:var(--gdn)} .cover.prz{color:var(--prz)}
+.grid.compact .book.open .cover{width:64px}
+.grid.compact .book.open .cover .ini{font-size:26px}
+.grid.compact .facts{display:block}
+.grid.compact .book.open .facts{display:none}
+.grid.compact .book:not(.open) .more{grid-template-rows:0fr;opacity:0}
+.grid.compact .book:not(.open){gap:0}
+.grid.compact .more-tg{display:grid;place-items:center;position:absolute;right:10px;bottom:10px;width:34px;height:34px;border-radius:999px;border:1px solid var(--rule);background:var(--card);color:var(--muted);cursor:pointer}
+.grid.compact .book.open .more-tg{bottom:auto;top:10px}
+.more-tg svg{width:16px;height:16px;transition:transform .38s}
+.book.open .more-tg svg{transform:rotate(180deg)}
+.more-tg:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.grid.compact .book .hd{padding-right:28px}
+@media (min-width:620px){.grid.compact .cover{width:132px}}
+@media (prefers-reduced-motion: reduce){.cover,.more,.more-tg svg{transition:none}}
 dialog.sheet{border:0;padding:0;background:transparent;max-width:min(560px, calc(100vw - 24px));width:100%;max-height:calc(100dvh - 48px)}
 dialog.sheet::backdrop{background:rgba(10,14,12,.55)}
 dialog.sheet .book{max-height:calc(100dvh - 48px);overflow:auto;opacity:1}
@@ -227,56 +282,73 @@ dialog.sheet .book{max-height:calc(100dvh - 48px);overflow:auto;opacity:1}
 <body>
 
 <div class="wrap">
-  <section id="viewHome">
-    <header class="top">
-      <div class="eyebrow">Bestenlisten und Literaturpreise · Stand 24. Oktober 2026</div>
-      <h1>Hörregal</h1>
-      <p class="lede">Die besten Bücher des 21. Jahrhunderts laut New York Times und Guardian, dazu die Sieger großer Literaturpreise, jeweils mit kurzem Teaser und dem Hörbuch-Angebot auf audible.de. Wähle eine Liste oder einen Preis.</p>
-      <div class="stock" id="stock"></div>
+  <section id="viewHome" aria-labelledby="homeTitle">
+    <header class="home-top">
+      <h1 id="homeTitle">Hörregal</h1>
+      <span class="eyebrow">Stand 24. Oktober 2026</span>
     </header>
-    <div class="tiles" id="tilesAll"></div>
-    <h2 class="sec">Bestenlisten</h2>
-    <div class="tiles" id="tilesLists"></div>
-    <h2 class="sec">Preisträger</h2>
-    <div class="tiles" id="tilesPrizes"></div>
-    <footer>
-      <div>Listen: New York Times Book Review, „The 100 Best Books of the 21st Century“ (Juli 2024) und „The 50 Best Thrillers of the 21st Century“ (August 2026); The Guardian, „The 100 best books of the 21st century“ (September 2019).</div>
-      <div>Preisträger: Deutscher Buchpreis (ab 2005), Österreichischer Buchpreis (ab 2016), International Booker Prize (ab 2016, in der heutigen Form), Pulitzer-Preis für Fiction (ab 2000) und Deutscher Krimipreis (ab 2000, jeweils Platz 1 national und international). Jeweils nur die Sieger. Bücher, die mehrfach vorkommen, erscheinen einmal mit allen Auszeichnungen.</div>
-      <div>Hörbuch-Angaben: geprüft auf audible.de, die ursprünglichen Listen am 22. Oktober 2026, die Ergänzungen am 24. Oktober 2026. Das Angebot ändert sich laufend; „suchen“ heißt, dass sich kein eindeutiger Treffer bestätigen ließ.</div>
-      <div>Cover: Open Library (openlibrary.org), wo vorhanden; meist die englische Ausgabe. Merkliste und „Gehört“ werden nur in diesem Browser gespeichert.</div>
-    </footer>
-  </section>
 
-  <section id="viewBooks" hidden>
-    <nav class="crumb"><a href="#/" class="back" id="backLink"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3L5 8l5 5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Auswahl</a></nav>
-    <header class="lhead" id="lHead">
-      <div class="eyebrow" id="lEyebrow"></div>
-      <h1 id="lTitle"></h1>
-      <p class="lede" id="lDesc"></p>
-    </header>
-    <div class="bar" role="search">
-      <div class="row">
-        <div class="seg" id="segAudio" aria-label="Hörbuch">
-          <button type="button" data-v="any" aria-pressed="true">Alle</button>
-          <button type="button" data-v="de" aria-pressed="false">Deutsch hörbar</button>
-          <button type="button" data-v="en" aria-pressed="false">Englisch hörbar</button>
-        </div>
+    <div class="fgroup">
+      <div class="flabel">Quelle</div>
+      <div class="seg" id="segList" aria-label="Quelle">
+        <button type="button" data-v="all" aria-pressed="true">Alle</button>
+        <button type="button" data-v="lists" aria-pressed="false">Listen</button>
+        <button type="button" data-v="prizes" aria-pressed="false">Preisträger</button>
       </div>
-      <div class="row">
-        <input type="search" id="q" placeholder="Titel oder Autorin suchen" aria-label="Suche">
+      <div class="chips" id="subs" aria-label="Liste oder Preis" hidden></div>
+    </div>
+
+    <div class="fgroup">
+      <div class="flabel">Hörbuch</div>
+      <div class="seg" id="segAudio" aria-label="Hörbuch">
+        <button type="button" data-v="any" aria-pressed="true">Alle</button>
+        <button type="button" data-v="de" aria-pressed="false">Deutsch hörbar</button>
+        <button type="button" data-v="en" aria-pressed="false">Englisch hörbar</button>
+      </div>
+    </div>
+
+    <div class="fgroup">
+      <div class="flabel">Suche und Sortierung</div>
+      <input type="search" id="q" placeholder="Titel oder Autorin suchen" aria-label="Suche">
+      <div class="row2">
         <select id="genre" aria-label="Gattung"><option value="">Alle Gattungen</option></select>
         <select id="sort" aria-label="Sortierung">
           <option value="rank">Rang bzw. Preisjahr</option>
           <option value="short">Hörzeit, kurz zuerst</option>
           <option value="new">Neueste zuerst</option>
         </select>
+      </div>
+      <div class="row2 toggles">
         <label class="toggle"><input type="checkbox" id="onlyFav"> nur Merkliste</label>
         <label class="toggle"><input type="checkbox" id="hideHeard"> Gehörtes ausblenden</label>
-        <span class="count" id="count"></span>
       </div>
     </div>
+
+    <div class="fgroup">
+      <div class="flabel">Ansicht</div>
+      <div class="seg" id="segMode" aria-label="Ansicht">
+        <button type="button" data-v="full" aria-pressed="true">Ausführlich</button>
+        <button type="button" data-v="compact" aria-pressed="false">Kompakt mit Cover</button>
+      </div>
+    </div>
+
+    <a class="gobtn" href="#/auswahl" id="goBtn"><span id="goCount">Bücher anzeigen</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+
+    <details class="about">
+      <summary>Über die Listen, Preise und Daten</summary>
+      <div class="stock" id="stock"></div>
+      <footer>    
+      <div>Listen: New York Times Book Review, „The 100 Best Books of the 21st Century“ (Juli 2024) und „The 50 Best Thrillers of the 21st Century“ (August 2026); The Guardian, „The 100 best books of the 21st century“ (September 2019).</div>
+      <div>Preisträger: Deutscher Buchpreis (ab 2005), Österreichischer Buchpreis (ab 2016), International Booker Prize (ab 2016, in der heutigen Form), Pulitzer-Preis für Fiction (ab 2000) und Deutscher Krimipreis (ab 2000, jeweils Platz 1 national und international). Jeweils nur die Sieger. Bücher, die mehrfach vorkommen, erscheinen einmal mit allen Auszeichnungen.</div>
+      <div>Hörbuch-Angaben: geprüft auf audible.de, die ursprünglichen Listen am 22. Oktober 2026, die Ergänzungen am 24. Oktober 2026. Das Angebot ändert sich laufend; „suchen“ heißt, dass sich kein eindeutiger Treffer bestätigen ließ.</div>
+      <div>Cover: Open Library (openlibrary.org), wo vorhanden; meist die englische Ausgabe. Merkliste und „Gehört“ werden nur in diesem Browser gespeichert.</div>
+    </footer>
+    </details>
+  </section>
+
+  <section id="viewList" hidden aria-label="Auswahl">
     <main class="grid" id="grid"></main>
-    <p class="empty" id="empty" hidden>Keine Bücher passen zu diesen Filtern.</p>
+    <p class="empty" id="empty" hidden>Keine Bücher passen zu diesen Filtern. <a href="#/">Filter ändern</a></p>
   </section>
 
   <section id="viewHeard" hidden aria-labelledby="shelfTitle">
@@ -290,10 +362,14 @@ dialog.sheet .book{max-height:calc(100dvh - 48px);overflow:auto;opacity:1}
   </section>
 </div>
 
-<nav class="tabbar" aria-label="Ansicht">
-  <a class="tab" href="#/" data-view="home" aria-current="page">
-    <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.6"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.6"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.6"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
-    <span>Auswahl</span>
+<nav class="tabbar" aria-label="Seiten">
+  <a class="tab" href="#/" data-view="home">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10.5L12 4l8 6.5V20h-5.5v-5.5h-5V20H4z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+    <span>Home</span>
+  </a>
+  <a class="tab" href="#/auswahl" data-view="list">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 6h12M8 12h12M8 18h12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="4.5" cy="6" r="1.2" fill="currentColor"/><circle cx="4.5" cy="12" r="1.2" fill="currentColor"/><circle cx="4.5" cy="18" r="1.2" fill="currentColor"/></svg>
+    <span>Auswahl</span><span class="badge alt" id="listBadge"></span>
   </a>
   <a class="tab" href="#/gehoert" data-view="heard">
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 20.5h18M3 11.5h18" stroke="currentColor" stroke-width="1.6" fill="none"/><path d="M5 11.5V5h3v6.5M9 11.5V4h3v7.5M14 11.5l1.6-6.3 2.8.7-1.5 5.6M5 20.5V14h3v6.5M9.5 20.5V15h3v5.5M14 20.5V13.5h3v7" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
@@ -315,7 +391,7 @@ const store = {
 };
 let fav = new Set(store.get('hr_fav'));
 let heard = new Set(store.get('hr_heard'));
-const state = { list:'all', sub:'', audio:'any', q:'', genre:'', sort:'rank', onlyFav:false, hideHeard:false };
+const state = { list:'all', sub:'', mode:'full', audio:'any', q:'', genre:'', sort:'rank', onlyFav:false, hideHeard:false };
 
 const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const fmtDur = m => { if(!m) return ''; const h = Math.floor(m/60), mi = m%60; return h ? `${h} h ${String(mi).padStart(2,'0')}` : `${mi} min`; };
@@ -355,6 +431,15 @@ function seriesLine(b){
   return `<p class="series"><span>Reihe: <b>${esc(s.name)}</b>${nr ? ' · ' + nr : ''}</span>${solo ? `<span class="solo">${solo}</span>` : ''}</p>`;
 }
 
+const openIds = new Set();
+function factsLine(b){
+  const de = b.audible_de?.available === true, en = b.audible_en?.available === true;
+  const d = (a) => a.minutes ? ' ' + fmtDur(a.minutes) : '';
+  const parts = [];
+  if(de) parts.push(`<b>DE</b>${d(b.audible_de)}${b.audible_de.abridged ? ' gekürzt' : ''}`);
+  if(en) parts.push(`<b>EN</b>${d(b.audible_en)}${b.audible_en.abridged ? ' gekürzt' : ''}`);
+  return parts.length ? 'Hörbuch: ' + parts.join(' · ') : 'Kein Hörbuch bei Audible gefunden';
+}
 function card(b){
   const ranks = [];
   if(b.rank_best) ranks.push(`<span class="rank lit">Nr. ${b.rank_best} · NYT 100</span>`);
@@ -364,26 +449,30 @@ function card(b){
   const hasDe = b.title_de && b.title_de.toLowerCase() !== b.title.toLowerCase();
   const head = hasDe ? b.title_de : b.title;
   const orig = hasDe ? ` · <i>${esc(b.title)}</i>` : '';
-  const isFav = fav.has(b.id), isHeard = heard.has(b.id);
+  const isFav = fav.has(b.id), isHeard = heard.has(b.id), isOpen = openIds.has(b.id);
   const cid = covers[b.id];
   const img = cid ? `<img src="https://covers.openlibrary.org/b/id/${cid}-M.jpg" alt="" loading="lazy" referrerpolicy="no-referrer" onload="this.classList.add('on');this.parentNode.classList.add('has-img')" onerror="this.remove()">` : '';
-  return `<article class="book${isHeard?' heard':''}" data-id="${b.id}">
+  return `<article class="book${isHeard?' heard':''}${isOpen?' open':''}" data-id="${b.id}">
     <div class="head">
-      <div class="cover${kind(b)}" aria-hidden="true"><span>${esc(head.replace(/^(Der|Die|Das|The|A|An)\s+/,'').charAt(0))}</span>${img}</div>
+      <div class="cover${kind(b)}" aria-hidden="true"><span class="ini">${esc(head.replace(/^(Der|Die|Das|The|A|An)\s+/,'').charAt(0))}</span><span class="pt"><b>${esc(head)}</b><i>${esc(b.author)}</i></span>${img}</div>
       <div class="hd">
         <div class="ranks">${ranks.join('')}<span class="genre">${esc(b.genre)}${b.year?' · '+b.year:''}</span></div>
         <h2>${esc(head)}</h2>
         <p class="byline">${esc(b.author)}${orig}</p>
         ${seriesLine(b)}
+        <p class="facts">${factsLine(b)}</p>
       </div>
     </div>
-    <p class="teaser">${esc(b.teaser)}</p>
-    ${b.note ? `<p class="note">${esc(b.note)}</p>` : ''}
-    <div class="audio">${audioRow(b,'audible_de','DE')}${audioRow(b,'audible_en','EN')}</div>
-    <div class="actions">
-      <button type="button" class="mark" data-act="fav" aria-pressed="${isFav}">${ICON_BM}${isFav?'Gemerkt':'Merken'}</button>
-      <button type="button" class="mark" data-act="heard" aria-pressed="${isHeard}">${ICON_OK}Gehört</button>
-    </div>
+    <button type="button" class="more-tg" aria-expanded="${isOpen}" aria-label="${isOpen ? 'Weniger anzeigen' : 'Mehr anzeigen'}"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 6l4.5 4.5L12.5 6" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <div class="more"><div class="more-in">
+      <p class="teaser">${esc(b.teaser)}</p>
+      ${b.note ? `<p class="note">${esc(b.note)}</p>` : ''}
+      <div class="audio">${audioRow(b,'audible_de','DE')}${audioRow(b,'audible_en','EN')}</div>
+      <div class="actions">
+        <button type="button" class="mark" data-act="fav" aria-pressed="${isFav}">${ICON_BM}${isFav?'Gemerkt':'Merken'}</button>
+        <button type="button" class="mark" data-act="heard" aria-pressed="${isHeard}">${ICON_OK}Gehört</button>
+      </div>
+    </div></div>
   </article>`;
 }
 
@@ -427,12 +516,19 @@ function filtered(){
 
 function render(){
   const list = filtered();
-  document.getElementById('grid').innerHTML = list.map(card).join('');
+  const grid = document.getElementById('grid');
+  grid.classList.toggle('compact', state.mode === 'compact');
+  grid.innerHTML = list.map(card).join('');
   document.getElementById('empty').hidden = list.length > 0;
-  { const tot = state.src ? booksOf(state.src).length : BOOKS.length; document.getElementById('count').textContent = list.length === tot ? `${tot} Bücher` : `${list.length} von ${tot} Büchern`; }
+  document.getElementById('goCount').textContent = list.length === 1 ? '1 Buch anzeigen' : `${list.length} Bücher anzeigen`;
+  document.getElementById('listBadge').textContent = list.length;
   observeCovers();
   renderShelf();
+  saveState();
 }
+const SAVE_KEYS = ['list','sub','audio','q','genre','sort','onlyFav','hideHeard','mode'];
+function saveState(){ try{ localStorage.setItem('hr_state', JSON.stringify(Object.fromEntries(SAVE_KEYS.map(k => [k, state[k]])))); }catch(e){} }
+function loadState(){ try{ const s = JSON.parse(localStorage.getItem('hr_state') || '{}'); SAVE_KEYS.forEach(k => { if(k in s) state[k] = s[k]; }); }catch(e){} }
 
 /* Gehört-Regal: Bücherregal mit Brettern */
 function headOf(b){ return b.title_de && b.title_de.toLowerCase() !== b.title.toLowerCase() ? b.title_de : b.title; }
@@ -477,80 +573,36 @@ function renderShelf(){
 }
 let rz; window.addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(renderShelf, 150); });
 
-/* Auswahl: Listen und Preise als eigene Seite */
-const SOURCES = {
-  all:    { group:'all', list:'all', sub:'', kind:'', title:'Alle Bücher', eyebrow:'Gesamtes Regal', desc:'Alle Bücher aus allen Listen und Preisen, jedes nur einmal.' },
-  lists:  { group:'lists', list:'lists', sub:'', kind:'', title:'Alle Bestenlisten', eyebrow:'Bestenlisten', desc:'Die drei Bestenlisten zusammen, Bücher auf mehreren Listen erscheinen einmal mit allen Rängen.' },
-  lit:    { group:'lists', list:'lists', sub:'lit', kind:'k-lit', title:'NYT: 100 beste Bücher', eyebrow:'New York Times · 2024', desc:'Die 100 besten Bücher des 21. Jahrhunderts, gewählt von über 500 Autorinnen, Kritikern und Buchmenschen.' },
-  thr:    { group:'lists', list:'lists', sub:'thr', kind:'k-thr', title:'NYT: 50 beste Thriller', eyebrow:'New York Times · 2026', desc:'Die 50 besten Thriller und Krimis des 21. Jahrhunderts.' },
-  gdn:    { group:'lists', list:'lists', sub:'gdn', kind:'k-gdn', title:'Guardian: 100 beste Bücher', eyebrow:'The Guardian · 2019', desc:'Die britische Antwort: 100 Bücher seit 2000, mit mehr Europa, Sachbuch und Lyrik.' },
-  prizes: { group:'prizes', list:'prizes', sub:'', kind:'k-prz', title:'Alle Preisträger', eyebrow:'Literaturpreise', desc:'Die Sieger aller fünf Preise, neueste zuerst.' },
-  dbp:    { group:'prizes', list:'prizes', sub:'dbp', kind:'k-prz', title:'Deutscher Buchpreis', eyebrow:'Seit 2005', desc:'Der Roman des Jahres auf Deutsch, vergeben zur Frankfurter Buchmesse.' },
-  oebp:   { group:'prizes', list:'prizes', sub:'oebp', kind:'k-prz', title:'Österreichischer Buchpreis', eyebrow:'Seit 2016', desc:'Das beste Buch aus Österreich, Belletristik wie Lyrik und Essay.' },
-  ib:     { group:'prizes', list:'prizes', sub:'ib', kind:'k-prz', title:'International Booker', eyebrow:'Seit 2016', desc:'Romane aus aller Welt in englischer Übersetzung, ausgezeichnet zusammen mit der Übersetzerin.' },
-  pul:    { group:'prizes', list:'prizes', sub:'pul', kind:'k-prz', title:'Pulitzer-Preis', eyebrow:'Fiction · seit 2000', desc:'Der wichtigste US-Preis für Romane amerikanischer Autorinnen und Autoren.' },
-  kp:     { group:'prizes', list:'prizes', sub:'kp', kind:'k-prz', title:'Deutscher Krimipreis', eyebrow:'Seit 2000', desc:'Jährlich der beste deutschsprachige und der beste übersetzte Krimi (jeweils Platz 1).' }
+/* Seiten: Home (Filter), Auswahl (Buchliste), Gehört (Regal) */
+const SUBS = {
+  lists: [['','Alle Listen',''],['lit','NYT 100 Beste','k-lit'],['thr','NYT 50 Thriller','k-thr'],['gdn','Guardian 100','k-gdn']],
+  prizes: [['','Alle Preise','k-prz'],['dbp','Dt. Buchpreis','k-prz'],['oebp','Österr. Buchpreis','k-prz'],['ib','Int. Booker','k-prz'],['pul','Pulitzer','k-prz'],['kp','Krimipreis','k-prz']]
 };
-function booksOf(key){
-  const s = SOURCES[key];
-  return BOOKS.filter(b => {
-    if(s.list === 'lists'){
-      if(!hasList(b)) return false;
-      if(s.sub === 'lit') return !!b.rank_best;
-      if(s.sub === 'thr') return !!b.rank_thriller;
-      if(s.sub === 'gdn') return !!b.rank_guardian;
-    }
-    if(s.list === 'prizes'){
-      if(!prizesOf(b).length) return false;
-      if(s.sub) return prizesOf(b).some(p => prizeMatch(p, s.sub));
-    }
-    return true;
-  });
+function renderSubs(){
+  const box = document.getElementById('subs');
+  const opts = SUBS[state.list];
+  box.hidden = !opts;
+  box.innerHTML = opts ? opts.map(([v,l,k]) => `<button type="button" class="chip ${k}" data-v="${v}" aria-pressed="${state.sub===v}">${esc(l)}</button>`).join('') : '';
 }
-function tile(key, big){
-  const s = SOURCES[key], bs = booksOf(key);
-  const de = bs.filter(b => b.audible_de?.available === true).length;
-  const hd = bs.filter(b => heard.has(b.id)).length;
-  return `<a class="tile ${s.kind}${big ? ' big' : ''}" href="#/b/${key}"><span class="spine"></span><span class="tb">
-    <span class="eyebrow">${esc(s.eyebrow)}</span><h3>${esc(s.title)}</h3><p>${esc(s.desc)}</p>
-    <span class="tm"><span><b>${bs.length}</b> Bücher</span><span><b>${de}</b> auf Deutsch hörbar</span>${hd ? `<span><b>${hd}</b> gehört</span>` : ''}</span></span></a>`;
-}
-function renderHome(){
-  document.getElementById('tilesAll').innerHTML = tile('all', true);
-  document.getElementById('tilesLists').innerHTML = ['lit','thr','gdn','lists'].map(k => tile(k)).join('');
-  document.getElementById('tilesPrizes').innerHTML = ['dbp','oebp','ib','pul','kp','prizes'].map(k => tile(k)).join('');
-}
-function setSource(key){
-  const s = SOURCES[key] || SOURCES.all;
-  state.src = key; state.list = s.list; state.sub = s.sub;
-  document.getElementById('lEyebrow').textContent = s.eyebrow;
-  document.getElementById('lTitle').textContent = s.title;
-  document.getElementById('lDesc').textContent = s.desc;
-}
+document.getElementById('subs').addEventListener('click', e => {
+  const btn = e.target.closest('.chip'); if(!btn) return;
+  state.sub = btn.dataset.v; renderSubs(); render();
+});
+const views = { home:'viewHome', list:'viewList', heard:'viewHeard' };
+const scrollPos = {};
 function route(){
   const h = location.hash || '#/';
-  let v = 'home';
-  const m = h.match(/^#\/b\/(\w+)/);
-  if(m && SOURCES[m[1]]){ v = 'books'; if(state.src !== m[1]){ setSource(m[1]); render(); } }
-  else if(h.startsWith('#/gehoert')) v = 'heard';
+  const v = h.startsWith('#/auswahl') ? 'list' : h.startsWith('#/gehoert') ? 'heard' : 'home';
+  if(state.view) scrollPos[state.view] = window.scrollY;
   state.view = v;
-  document.getElementById('viewHome').hidden = v !== 'home';
-  document.getElementById('viewBooks').hidden = v !== 'books';
-  document.getElementById('viewHeard').hidden = v !== 'heard';
-  document.querySelectorAll('.tab').forEach(x => {
-    const on = x.dataset.view === v || (x.dataset.view === 'home' && v === 'books');
-    if(on) x.setAttribute('aria-current','page'); else x.removeAttribute('aria-current');
-  });
-  if(v === 'home') renderHome();
+  Object.entries(views).forEach(([k,id]) => document.getElementById(id).hidden = k !== v);
+  document.querySelectorAll('.tab').forEach(x => { if(x.dataset.view === v) x.setAttribute('aria-current','page'); else x.removeAttribute('aria-current'); });
   renderShelf();
   if(sheet.open) sheet.close();
-  window.scrollTo(0,0);
+  window.scrollTo(0, v === 'list' ? (scrollPos.list || 0) : 0);
 }
 window.addEventListener('hashchange', route);
-document.getElementById('backLink').addEventListener('click', e => {
-  if(history.length > 1 && state.cameFromHome){ e.preventDefault(); history.back(); }
-});
-document.addEventListener('click', e => { if(e.target.closest('.tile')) state.cameFromHome = true; });
+document.getElementById('goBtn').addEventListener('click', () => { scrollPos.list = 0; });
 
 const sheet = document.getElementById('sheet');
 function openSheet(id){
@@ -575,7 +627,6 @@ function toggleMark(act, id){
   set.has(id) ? set.delete(id) : set.add(id);
   store.set('hr_fav', [...fav]); store.set('hr_heard', [...heard]);
   render();
-  if(state.view === 'home') renderHome();
 }
 
 /* Cover: werden im Browser von Open Library geladen (openlibrary.org), Ergebnis wird lokal gemerkt. */
@@ -650,11 +701,12 @@ function seg(id, key){
   el.addEventListener('click', e => {
     const btn = e.target.closest('button'); if(!btn) return;
     state[key] = btn.dataset.v;
+    if(key === 'list'){ state.sub = ''; renderSubs(); }
     el.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', x===btn));
     render();
   });
 }
-seg('segAudio','audio');
+seg('segAudio','audio'); seg('segList','list'); seg('segMode','mode');
 const genres = [...new Set(BOOKS.map(b => b.genre))].sort((a,b)=>a.localeCompare(b,'de'));
 document.getElementById('genre').insertAdjacentHTML('beforeend', genres.map(g => `<option>${esc(g)}</option>`).join(''));
 document.getElementById('q').addEventListener('input', e => { state.q = e.target.value; render(); });
@@ -666,7 +718,25 @@ document.getElementById('grid').addEventListener('click', e => {
   const btn = e.target.closest('.mark'); if(!btn) return;
   toggleMark(btn.dataset.act, +btn.closest('.book').dataset.id);
 });
-stock(); setSource('all'); render(); route();
+loadState();
+function syncControls(){
+  [['segList','list'],['segAudio','audio'],['segMode','mode']].forEach(([id,k]) => document.querySelectorAll(`#${id} button`).forEach(x => x.setAttribute('aria-pressed', x.dataset.v === state[k])));
+  document.getElementById('q').value = state.q || '';
+  document.getElementById('genre').value = state.genre || '';
+  document.getElementById('sort').value = state.sort || 'rank';
+  document.getElementById('onlyFav').checked = !!state.onlyFav;
+  document.getElementById('hideHeard').checked = !!state.hideHeard;
+  renderSubs();
+}
+document.getElementById('grid').addEventListener('click', e => {
+  const tg = e.target.closest('.more-tg'); if(!tg) return;
+  const art = tg.closest('.book'), id = +art.dataset.id;
+  const open = !art.classList.contains('open');
+  art.classList.toggle('open', open);
+  open ? openIds.add(id) : openIds.delete(id);
+  tg.setAttribute('aria-expanded', open); tg.setAttribute('aria-label', open ? 'Weniger anzeigen' : 'Mehr anzeigen');
+});
+stock(); syncControls(); render(); route();
 </script>
 
 </body>
