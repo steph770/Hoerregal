@@ -9,7 +9,7 @@
 <title>Hörregal</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Special+Elite&family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Permanent+Marker&family=Space+Grotesk:wght@400;500&family=Space+Mono&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Playfair+Display:wght@700;900&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
 /* Layout: ein Bibliotheks-Karteikasten. Kopf mit Bestand, klebende Filterleiste, Karteikarten in 1-2 Spalten. NYT-Literatur = Leinengrün, NYT-Thriller = Ochsenblut, Guardian = Tintenblau, Preise = Messing. */
 :root{
@@ -115,7 +115,7 @@ input[type="search"]{flex:1 1 200px}
 .book h2{font-family:var(--f-display);font-weight:400;font-size:23px;line-height:1.15;margin:0;text-wrap:balance}
 .byline{margin:-2px 0 0;font-size:14px;color:var(--muted)}
 .byline i{font-style:italic}
-.series span{white-space:nowrap}
+.series .nw{white-space:nowrap}
 .series{margin:-2px 0 0;font-family:var(--f-mono);font-size:12px;color:var(--muted);display:flex;flex-wrap:wrap;gap:2px 8px;align-items:baseline}
 .series b{font-weight:500;color:var(--ink)}
 .series .solo{font-family:var(--f-body);font-style:italic;font-size:12.5px}
@@ -247,7 +247,7 @@ body{padding-bottom:calc(84px + env(safe-area-inset-bottom, 0px))}
 .facts{display:none;margin:0;font-family:var(--f-mono);font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
 .facts b{font-weight:500;color:var(--ok)}
 .facts .nw{white-space:nowrap}
-.more{display:grid;grid-template-rows:1fr;opacity:1;transition:grid-template-rows .38s cubic-bezier(.2,.7,.2,1), opacity .3s .05s}
+.more{display:grid;grid-template-rows:1fr;opacity:1;visibility:visible;transition:grid-template-rows .38s cubic-bezier(.2,.7,.2,1), opacity .3s .05s, visibility .38s}
 .more-in{min-height:0;overflow:hidden;display:flex;flex-direction:column;gap:10px}
 .more-tg{display:none}
 .grid.compact .book{position:relative;padding-bottom:14px}
@@ -262,7 +262,7 @@ body{padding-bottom:calc(84px + env(safe-area-inset-bottom, 0px))}
 .grid.compact .book.open .cover .ini{font-size:26px}
 .grid.compact .facts{display:block}
 .grid.compact .book.open .facts{display:none}
-.grid.compact .book:not(.open) .more{grid-template-rows:0fr;opacity:0}
+.grid.compact .book:not(.open) .more{grid-template-rows:0fr;opacity:0;visibility:hidden}
 .grid.compact .book:not(.open){gap:0}
 .grid.compact .more-tg{display:grid;place-items:center;position:absolute;right:10px;bottom:10px;width:34px;height:34px;border-radius:999px;border:1px solid var(--rule);background:var(--card);color:var(--muted);cursor:pointer}
 .grid.compact .book.open .more-tg{bottom:auto;top:10px}
@@ -272,6 +272,97 @@ body{padding-bottom:calc(84px + env(safe-area-inset-bottom, 0px))}
 .grid.compact .book .hd{padding-right:28px}
 @media (min-width:620px){.grid.compact .cover{width:132px}}
 @media (prefers-reduced-motion: reduce){.cover,.more,.more-tg svg{transition:none}}
+
+/* Einstellungen */
+.tab{min-width:0!important;flex:1 1 0;max-width:120px;padding:6px 4px!important}
+.hint{margin:4px 0 0;font-size:13px;color:var(--muted);line-height:1.45}
+.designs{display:grid;grid-template-columns:repeat(auto-fill, minmax(150px, 1fr));gap:10px}
+.dsg{font:inherit;text-align:left;display:grid;gap:3px;padding:10px;border:1px solid var(--rule);border-radius:10px;background:var(--card);color:var(--ink);cursor:pointer}
+.dsg[aria-pressed="true"]{border-color:var(--ink);box-shadow:0 0 0 1px var(--ink)}
+.dsg b{font-weight:600;font-size:14px}
+.dsg small{font-size:12px;color:var(--muted);line-height:1.35}
+.sw{display:flex;height:44px;border-radius:6px;overflow:hidden;margin-bottom:5px;border:1px solid rgba(0,0,0,.12)}
+.sw i{flex:1}
+.sw-std i:nth-child(1){background:#F1F3EF}.sw-std i:nth-child(2){background:#1E5A47}.sw-std i:nth-child(3){background:#8C2F2B}
+.sw-card i:nth-child(1){background:#F3EBD8}.sw-card i:nth-child(2){background:#CDBB93}.sw-card i:nth-child(3){background:#A3322A}
+.sw-tape i:nth-child(1){background:#26262B}.sw-tape i:nth-child(2){background:#E8A93B}.sw-tape i:nth-child(3){background:#3E7CB1}
+.sw-night i:nth-child(1){background:#101915}.sw-night i:nth-child(2){background:#1B2B24}.sw-night i:nth-child(3){background:#C9A55A}
+.sw-paper i:nth-child(1){background:#FBFAF6}.sw-paper i:nth-child(2){background:#111}.sw-paper i:nth-child(3){background:#FBFAF6;border-left:3px double #111}
+#viewSettings{padding-bottom:20px}
+
+/* ===== Design: Leihkarte ===== */
+html:root[data-design="card"]{--paper:#E6DEC9;--card:#F6EFDC;--ink:#2E2618;--muted:#6B5D44;--rule:#CDBB93;--lit:#3D5A3A;--lit-soft:#E2E3CC;--thr:#A3322A;--thr-soft:#F0D9CC;--gdn:#2F4A6B;--gdn-soft:#DCE0DD;--prz:#86601A;--prz-soft:#EEDFB9;--ok:#3D5A3A;--ok-soft:#E4E3C8;--off:#9A8D72;--focus:#2F4A6B;
+  --f-display:"Special Elite","Courier New",monospace;--f-body:"Courier Prime","Courier New",monospace;--f-mono:"Courier Prime","Courier New",monospace;
+  --wood:#B88A57;--wood-hi:#D7AE7C;--wood-lo:#8A6238;--case-back:#EDE3CD;--case-back2:#E2D6BC;color-scheme:light}
+html:root[data-design="card"] body{background:var(--paper) repeating-linear-gradient(90deg, transparent 0 3px, rgba(120,90,40,.03) 3px 4px)}
+html:root[data-design="card"] .book{position:relative;border-radius:2px;border-color:#D9C79F;box-shadow:0 1px 0 #CDBB93, 0 6px 14px -10px rgba(60,40,10,.4);
+  background:var(--card) repeating-linear-gradient(transparent 0 25px, #E3D3AE 25px 26px);border-top:22px solid #EADDBE}
+html:root[data-design="card"] .book::before{content:"HÖRREGAL · AUSLEIHKARTE";position:absolute;top:-18px;left:14px;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.14em;color:var(--muted)}
+html:root[data-design="card"] .book h2{font-size:22px}
+html:root[data-design="card"] .book.heard{opacity:1}
+html:root[data-design="card"] .book.heard::after{content:"GEHÖRT";position:absolute;left:18px;bottom:16px;transform:rotate(-9deg);border:2.5px solid #A3322A;color:#A3322A;font-family:var(--f-display);font-size:16px;letter-spacing:.12em;padding:2px 8px;border-radius:4px;opacity:.85;pointer-events:none;mix-blend-mode:multiply}
+html:root[data-design="card"] .rank{border-radius:0;border:1px solid currentColor;background:transparent}
+html:root[data-design="card"] .seg,html:root[data-design="card"] input[type="search"],html:root[data-design="card"] select,html:root[data-design="card"] .chip,html:root[data-design="card"] .mark,html:root[data-design="card"] .gobtn,html:root[data-design="card"] .tab[aria-current="page"],html:root[data-design="card"] .dsg{border-radius:3px}
+html:root[data-design="card"] .seg button[aria-pressed="true"],html:root[data-design="card"] .gobtn{background:#2E2618;color:#F6EFDC}
+html:root[data-design="card"] .cover{border-radius:0}
+
+/* ===== Design: Kassettenregal ===== */
+html:root[data-design="tape"]{--paper:#1C1C20;--card:#2A2A30;--ink:#F1ECE2;--muted:#A8A39A;--rule:#3E3E46;--lit:#E8A93B;--lit-soft:#3A3122;--thr:#EF6A55;--thr-soft:#3D2723;--gdn:#62AEE6;--gdn-soft:#1F3040;--prz:#F0CF4A;--prz-soft:#3A3519;--ok:#86D9A0;--ok-soft:#22372A;--off:#77736C;--focus:#62AEE6;
+  --f-display:"Permanent Marker","Comic Sans MS",cursive;--f-body:"Space Grotesk",system-ui,sans-serif;--f-mono:"Space Mono",ui-monospace,monospace;color-scheme:dark}
+html:root[data-design="tape"] .book{border-radius:12px;border:1px solid #3E3E46;background:#26262B}
+html:root[data-design="tape"] .book .hd{background:#EFE8D6;color:#2A2520;border-radius:4px;padding:8px 10px 10px;border-top:7px solid var(--lit);--muted:#6E665B;--ink:#2A2520}
+html:root[data-design="tape"] .book .head .cover.thr + .hd{border-top-color:var(--thr)}
+html:root[data-design="tape"] .book .head .cover.gdn + .hd{border-top-color:var(--gdn)}
+html:root[data-design="tape"] .book .head .cover.prz + .hd{border-top-color:var(--prz)}
+html:root[data-design="tape"] .book .hd .rank{background:#2A2520;color:#EFE8D6}
+html:root[data-design="tape"] .book .hd .facts b{color:#2E7A46}
+html:root[data-design="tape"] .book h2{font-size:22px;line-height:1.2;letter-spacing:.01em}
+html:root[data-design="tape"] .book .series b{color:#2A2520}
+html:root[data-design="tape"] .grid.compact .more-tg{background:#EFE8D6;color:#2A2520}
+html:root[data-design="tape"] .cover{border-radius:3px}
+html:root[data-design="tape"] .seg button[aria-pressed="true"],html:root[data-design="tape"] .gobtn{background:var(--lit);color:#1C1C20}
+html:root[data-design="tape"] .chip[aria-pressed="true"]{background:var(--lit);border-color:var(--lit);color:#1C1C20}
+html:root[data-design="tape"] h1{font-family:var(--f-display)}
+.tower{margin-top:14px;padding:12px;border-radius:10px;background:#3A3A40;border:2px solid #4A4A52;display:grid;gap:6px}
+.tape{all:unset;cursor:pointer;display:grid;grid-template-columns:10px minmax(0,1fr) auto;align-items:center;gap:10px;height:48px;padding:0 12px 0 0;border-radius:4px;background:#EFE8D6;color:#2A2520;box-shadow:inset 0 -3px 0 rgba(0,0,0,.12)}
+.tape:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.tape .st{height:100%;border-radius:4px 0 0 4px;background:var(--lit)}
+.tape.thr .st{background:var(--thr)} .tape.gdn .st{background:var(--gdn)} .tape.prz .st{background:var(--prz)}
+.tape b{font-family:"Permanent Marker",cursive;font-weight:400;font-size:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block}
+.tape small{display:block;font-family:"Space Mono",monospace;font-size:10.5px;color:#6E665B;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tape .reels{display:flex;gap:8px;align-items:center;font-family:"Space Mono",monospace;font-size:10.5px;color:#6E665B}
+.tape .reels i{width:16px;height:16px;border-radius:50%;border:4px solid #2A2520;box-sizing:border-box}
+.tower .slot{height:48px;border-radius:4px;border:1px dashed #5A5A62}
+
+/* ===== Design: Lesesaal bei Nacht ===== */
+html:root[data-design="night"]{--paper:#0F1814;--card:#16231D;--ink:#EDE3CC;--muted:#A79F8A;--rule:#2C3B33;--lit:#C9A55A;--lit-soft:#2B2A1C;--thr:#DE8F6E;--thr-soft:#36231C;--gdn:#93B8DE;--gdn-soft:#1C2836;--prz:#E3C37C;--prz-soft:#33301E;--ok:#D1B06A;--ok-soft:#2A2A1B;--off:#6F7A70;--focus:#E3C37C;
+  --f-display:"Cormorant Garamond",Georgia,serif;--wood:#5A3B22;--wood-hi:#7C5634;--wood-lo:#33200F;--case-back:#1A1410;--case-back2:#15100C;color-scheme:dark}
+html:root[data-design="night"] body{background:radial-gradient(ellipse 80% 50% at 50% -8%, rgba(227,195,124,.20), transparent 70%) no-repeat fixed, var(--paper)}
+html:root[data-design="night"] .book{border-color:#4A4128;box-shadow:inset 0 1px 0 rgba(227,195,124,.10)}
+html:root[data-design="night"] .book h2{font-size:26px;font-weight:600}
+html:root[data-design="night"] h1{font-weight:600;letter-spacing:.01em}
+html:root[data-design="night"] .seg button[aria-pressed="true"],html:root[data-design="night"] .gobtn{background:var(--lit);color:#0F1814}
+html:root[data-design="night"] .chip[aria-pressed="true"]{background:var(--lit);border-color:var(--lit);color:#0F1814}
+html:root[data-design="night"] .rank{background:transparent;border:1px solid currentColor}
+html:root[data-design="night"] .tabbar{background:rgba(15,24,20,.92)}
+
+/* ===== Design: Feuilleton ===== */
+html:root[data-design="paper"]{--paper:#FBFAF6;--card:#FBFAF6;--ink:#111;--muted:#555;--rule:#111;--lit:#111;--lit-soft:#ECEAE3;--thr:#8E1B1B;--thr-soft:#F1E6E2;--gdn:#111;--gdn-soft:#ECEAE3;--prz:#111;--prz-soft:#ECEAE3;--ok:#111;--ok-soft:#ECEAE3;--off:#8A8A8A;--focus:#8E1B1B;
+  --f-display:"Playfair Display",Georgia,serif;--wood:#2B2B2B;--wood-hi:#555;--wood-lo:#111;--case-back:#F1EFE8;--case-back2:#E8E5DC;color-scheme:light}
+html:root[data-design="paper"] .book{border:0;border-top:4px double #111;border-radius:0;background:transparent;padding:14px 2px 16px}
+html:root[data-design="paper"] .book h2{font-weight:900;font-size:27px;line-height:1.05}
+html:root[data-design="paper"] h1{font-weight:900}
+html:root[data-design="paper"] .home-top{border-bottom:4px double #111;padding-bottom:8px;margin-bottom:6px}
+html:root[data-design="paper"] .home-top h1{font-size:40px}
+html:root[data-design="paper"] .teaser::first-letter{float:left;font-family:var(--f-display);font-weight:900;font-size:3.1em;line-height:.82;padding:6px 6px 0 0}
+html:root[data-design="paper"] .rank{background:transparent;color:#111;text-transform:uppercase;letter-spacing:.1em;font-size:10.5px;border-bottom:1px solid #111;border-radius:0;padding:1px 0}
+html:root[data-design="paper"] .rank.thr{color:var(--thr);border-color:var(--thr)}
+html:root[data-design="paper"] .seg,html:root[data-design="paper"] input[type="search"],html:root[data-design="paper"] select,html:root[data-design="paper"] .chip,html:root[data-design="paper"] .mark,html:root[data-design="paper"] .gobtn,html:root[data-design="paper"] .dsg,html:root[data-design="paper"] .ab{border-radius:0}
+html:root[data-design="paper"] .ab.yes{background:transparent;border:1px solid #111}
+html:root[data-design="paper"] .cover{filter:grayscale(1) contrast(1.05)}
+html:root[data-design="paper"] .sc img{filter:grayscale(1) contrast(1.05)}
+html:root[data-design="paper"] .tab[aria-current="page"]{border-radius:0}
+@media (min-width:820px){html:root[data-design="paper"] .teaser{column-count:2;column-gap:22px}}
 dialog.sheet{border:0;padding:0;background:transparent;max-width:min(560px, calc(100vw - 24px));width:100%;max-height:calc(100dvh - 48px)}
 dialog.sheet::backdrop{background:rgba(10,14,12,.55)}
 dialog.sheet .book{max-height:calc(100dvh - 48px);overflow:auto;opacity:1}
@@ -280,6 +371,7 @@ dialog.sheet .book{max-height:calc(100dvh - 48px);overflow:auto;opacity:1}
 @media (prefers-reduced-motion: reduce){.sc{transition:none}}
 @media (prefers-reduced-motion: reduce){*{scroll-behavior:auto!important;transition:none!important}}
 </style>
+<script>try{var s=JSON.parse(localStorage.getItem("hr_state")||"{}");if(s.design)document.documentElement.dataset.design=s.design}catch(e){}</script>
 </head>
 <body>
 
@@ -326,13 +418,6 @@ dialog.sheet .book{max-height:calc(100dvh - 48px);overflow:auto;opacity:1}
       </div>
     </div>
 
-    <div class="fgroup">
-      <div class="flabel">Ansicht</div>
-      <div class="seg" id="segMode" aria-label="Ansicht">
-        <button type="button" data-v="full" aria-pressed="true">Ausführlich</button>
-        <button type="button" data-v="compact" aria-pressed="false">Kompakt mit Cover</button>
-      </div>
-    </div>
 
     <a class="gobtn" href="#/auswahl" id="goBtn"><span id="goCount">Bücher anzeigen</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
 
@@ -364,6 +449,29 @@ dialog.sheet .book{max-height:calc(100dvh - 48px);overflow:auto;opacity:1}
   </section>
 </div>
 
+<section id="viewSettings" hidden aria-labelledby="setTitle" class="wrap">
+  <header class="home-top"><h1 id="setTitle">Einstellungen</h1></header>
+  <div class="fgroup">
+    <div class="flabel">Design</div>
+    <div class="designs" id="designs">
+      <button type="button" class="dsg" data-v="std"><span class="sw sw-std"><i></i><i></i><i></i></span><b>Karteikasten</b><small>Ruhig und hell, der Standard</small></button>
+      <button type="button" class="dsg" data-v="card"><span class="sw sw-card"><i></i><i></i><i></i></span><b>Leihkarte</b><small>Schreibmaschine und roter Stempel</small></button>
+      <button type="button" class="dsg" data-v="tape"><span class="sw sw-tape"><i></i><i></i><i></i></span><b>Kassettenregal</b><small>Etiketten und Kassettenturm</small></button>
+      <button type="button" class="dsg" data-v="night"><span class="sw sw-night"><i></i><i></i><i></i></span><b>Lesesaal bei Nacht</b><small>Dunkelgrün und Messing</small></button>
+      <button type="button" class="dsg" data-v="paper"><span class="sw sw-paper"><i></i><i></i><i></i></span><b>Feuilleton</b><small>Zeitung in Schwarzweiß</small></button>
+    </div>
+  </div>
+  <div class="fgroup">
+    <div class="flabel">Ansicht der Bücherliste</div>
+    <div class="seg" id="segMode" aria-label="Ansicht">
+      <button type="button" data-v="full" aria-pressed="true">Ausführlich</button>
+      <button type="button" data-v="compact" aria-pressed="false">Kompakt mit Cover</button>
+    </div>
+    <p class="hint">Kompakt zeigt große Cover und nur die wichtigsten Angaben, der Pfeil klappt Teaser und Hörbuch-Links auf.</p>
+  </div>
+  <p class="hint">Einstellungen, Merkliste und „Gehört“ werden nur in diesem Browser gespeichert.</p>
+</section>
+
 <nav class="tabbar" aria-label="Seiten">
   <a class="tab" href="#/" data-view="home">
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10.5L12 4l8 6.5V20h-5.5v-5.5h-5V20H4z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
@@ -376,6 +484,10 @@ dialog.sheet .book{max-height:calc(100dvh - 48px);overflow:auto;opacity:1}
   <a class="tab" href="#/gehoert" data-view="heard">
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 20.5h18M3 11.5h18" stroke="currentColor" stroke-width="1.6" fill="none"/><path d="M5 11.5V5h3v6.5M9 11.5V4h3v7.5M14 11.5l1.6-6.3 2.8.7-1.5 5.6M5 20.5V14h3v6.5M9.5 20.5V15h3v5.5M14 20.5V13.5h3v7" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
     <span>Gehört</span><span class="badge" id="heardBadge" hidden></span>
+  </a>
+  <a class="tab" href="#/einstellungen" data-view="settings">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h4M12 17h8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="16" cy="7" r="2.2" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="10" cy="17" r="2.2" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+    <span>Einstellungen</span>
   </a>
 </nav>
 
@@ -393,7 +505,7 @@ const store = {
 };
 let fav = new Set(store.get('hr_fav'));
 let heard = new Set(store.get('hr_heard'));
-const state = { list:'all', sub:'', mode:'full', audio:'any', q:'', genre:'', sort:'rank', onlyFav:false, hideHeard:false };
+const state = { list:'all', sub:'', mode:'full', design:'std', audio:'any', q:'', genre:'', sort:'rank', onlyFav:false, hideHeard:false };
 
 const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const fmtDur = m => { if(!m) return ''; const h = Math.floor(m/60), mi = m%60; return h ? `${h} h ${String(mi).padStart(2,'0')}` : `${mi} min`; };
@@ -430,7 +542,7 @@ function seriesLine(b){
   const s = b.series; if(!s || !s.name) return '';
   const nr = s.no ? `Band ${s.no}${s.total ? ' von ' + s.total : ''}` : '';
   const solo = s.standalone === true ? 'auch einzeln gut hörbar' : s.standalone === false ? 'besser mit den Vorgängern' : '';
-  return `<p class="series"><span>Reihe: <b>${esc(s.name)}</b>${nr ? ' · ' + nr : ''}</span>${solo ? `<span class="solo">${solo}</span>` : ''}</p>`;
+  return `<p class="series"><span>Reihe: <b>${esc(s.name)}</b>${nr ? ' · <span class="nw">' + nr + '</span>' : ''}</span>${solo ? `<span class="solo">${solo}</span>` : ''}</p>`;
 }
 
 const openIds = new Set();
@@ -528,7 +640,7 @@ function render(){
   renderShelf();
   saveState();
 }
-const SAVE_KEYS = ['list','sub','audio','q','genre','sort','onlyFav','hideHeard','mode'];
+const SAVE_KEYS = ['list','sub','audio','q','genre','sort','onlyFav','hideHeard','mode','design'];
 function saveState(){ try{ localStorage.setItem('hr_state', JSON.stringify(Object.fromEntries(SAVE_KEYS.map(k => [k, state[k]])))); }catch(e){} }
 function loadState(){ try{ const s = JSON.parse(localStorage.getItem('hr_state') || '{}'); SAVE_KEYS.forEach(k => { if(k in s) state[k] = s[k]; }); }catch(e){} }
 
@@ -552,6 +664,15 @@ function renderShelf(){
   badge.hidden = !ids.length; badge.textContent = ids.length;
   if(state.view !== 'heard') return;
   const books = ids.map(id => byId[id]);
+  if(state.design === 'tape'){
+    const slots = Math.max(0, 6 - books.length);
+    document.getElementById('shelf').innerHTML = '<div class="tower">' + books.map(b => {
+      const a = b.audible_de?.available ? b.audible_de : b.audible_en?.available ? b.audible_en : null;
+      return `<button type="button" class="sb tape${kind(b)}" data-id="${b.id}" aria-label="${esc(headOf(b))} von ${esc(b.author)}"><span class="st"></span><span><b>${esc(headOf(b))}</b><small>${esc(b.author)}</small></span><span class="reels"><i></i>${a && a.minutes ? fmtDur(a.minutes) : ''}<i></i></span></button>`;
+    }).join('') + '<span class="slot"></span>'.repeat(slots) + '</div>';
+    document.getElementById('shelf').className = '';
+  } else {
+  document.getElementById('shelf').className = 'case';
   const n = perRow();
   const rows = Math.max(3, Math.ceil(books.length / n));
   let html = '';
@@ -561,6 +682,7 @@ function renderShelf(){
       + '<span class="gap"></span>'.repeat(n - part.length) + '</div>';
   }
   document.getElementById('shelf').innerHTML = html;
+  }
   document.getElementById('shelfEmpty').hidden = books.length > 0;
   const mins = books.reduce((s,b) => {
     const de = b.audible_de?.available ? b.audible_de.minutes : null, en = b.audible_en?.available ? b.audible_en.minutes : null;
@@ -590,11 +712,11 @@ document.getElementById('subs').addEventListener('click', e => {
   const btn = e.target.closest('.chip'); if(!btn) return;
   state.sub = btn.dataset.v; renderSubs(); render();
 });
-const views = { home:'viewHome', list:'viewList', heard:'viewHeard' };
+const views = { home:'viewHome', list:'viewList', heard:'viewHeard', settings:'viewSettings' };
 const scrollPos = {};
 function route(){
   const h = location.hash || '#/';
-  const v = h.startsWith('#/auswahl') ? 'list' : h.startsWith('#/gehoert') ? 'heard' : 'home';
+  const v = h.startsWith('#/auswahl') ? 'list' : h.startsWith('#/gehoert') ? 'heard' : h.startsWith('#/einstellungen') ? 'settings' : 'home';
   if(state.view) scrollPos[state.view] = window.scrollY;
   state.view = v;
   Object.entries(views).forEach(([k,id]) => document.getElementById(id).hidden = k !== v);
@@ -738,6 +860,17 @@ document.getElementById('grid').addEventListener('click', e => {
   open ? openIds.add(id) : openIds.delete(id);
   tg.setAttribute('aria-expanded', open); tg.setAttribute('aria-label', open ? 'Weniger anzeigen' : 'Mehr anzeigen');
 });
+const THEME_COLOR = { std:'#F1F3EF', card:'#E6DEC9', tape:'#1C1C20', night:'#0F1814', paper:'#FBFAF6' };
+function applyDesign(){
+  document.documentElement.dataset.design = state.design;
+  const m = document.querySelector('meta[name="theme-color"]'); if(m) m.content = THEME_COLOR[state.design] || THEME_COLOR.std;
+  document.querySelectorAll('.dsg').forEach(x => x.setAttribute('aria-pressed', x.dataset.v === state.design));
+}
+document.getElementById('designs').addEventListener('click', e => {
+  const b = e.target.closest('.dsg'); if(!b) return;
+  state.design = b.dataset.v; applyDesign(); render();
+});
+applyDesign();
 stock(); syncControls(); render(); route();
 </script>
 
